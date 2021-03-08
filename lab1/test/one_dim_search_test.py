@@ -1,5 +1,5 @@
 import unittest
-from parameterized import parameterized, parameterized_class
+from parameterized import parameterized
 
 from lab1.src.one_dim_search import (
     dichotomy_method,
