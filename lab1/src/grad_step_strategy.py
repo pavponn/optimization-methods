@@ -1,10 +1,20 @@
 from enum import Enum
 import numpy as np
+from lab1.src.one_dim_search import (
+    dichotomy_method,
+    golden_selection_method,
+    fibonacci_method
+)
+
+DEFAULT_MAX_STEP = 100
 
 
 class StepStrategy(Enum):
     DIVIDE_STEP = 1,
     CONSTANT_STEP = 2
+    DICHOTOMY_STEP = 3,
+    GOLDEN_SELECTION_STEP = 4,
+    FIBONACCI_STEP = 5
 
 
 def get_step_strategy(strategy, f, f_grad, eps):
@@ -12,23 +22,30 @@ def get_step_strategy(strategy, f, f_grad, eps):
         return ConstantStepStrategy(f, f_grad, eps)
     elif strategy == StepStrategy.DIVIDE_STEP:
         return DivideStepStrategy(f, f_grad, eps)
+    elif strategy == StepStrategy.DICHOTOMY_STEP:
+        return DichotomyStepStrategy(f, f_grad, eps)
+    elif strategy == StepStrategy.GOLDEN_SELECTION_STEP:
+        return GoldenSelectionStepStrategy(f, f_grad, eps)
+    elif strategy == StepStrategy.FIBONACCI_STEP:
+        return FibonacciStepStrategy(f, f_grad, eps)
     else:
         raise TypeError("unknown strategy")
 
 
 class BaseStepStrategy(object):
-    def __init__(self, f, f_grad, eps):
+    def __init__(self, f, f_grad, eps, max_step=DEFAULT_MAX_STEP):
         self.f = f
         self.f_grad = f_grad
         self.eps = eps
+        self.max_step = max_step
 
     def next_step(self, x):
         raise NotImplemented
 
 
 class ConstantStepStrategy(BaseStepStrategy):
-    def __init__(self, f, f_grad, eps, start_alpha=10.0):
-        super().__init__(f, f_grad, eps)
+    def __init__(self, f, f_grad, eps, max_step=DEFAULT_MAX_STEP, start_alpha=10.0):
+        super().__init__(f, f_grad, eps, max_step)
         self.cur_alpha = start_alpha
         self.iter = 0
 
@@ -47,8 +64,8 @@ class ConstantStepStrategy(BaseStepStrategy):
 
 
 class DivideStepStrategy(BaseStepStrategy):
-    def __init__(self, f, f_grad, eps, alpha=10.0, delta=0.8, max_power=1e4):
-        super().__init__(f, f_grad, eps)
+    def __init__(self, f, f_grad, eps, max_step=DEFAULT_MAX_STEP, alpha=10.0, delta=0.8, max_power=1e4):
+        super().__init__(f, f_grad, eps, max_step)
         self.alpha = alpha
         self.delta = delta
         self.max_power = max_power
@@ -66,4 +83,17 @@ class DivideStepStrategy(BaseStepStrategy):
 
         return cur_lambda
 
-# TODO: one dim strategies
+
+class DichotomyStepStrategy(BaseStepStrategy):
+    def next_step(self, x):
+        return dichotomy_method(lambda step: self.f(x - step * self.f_grad(x)), 0, self.max_step, self.eps)[0]
+
+
+class GoldenSelectionStepStrategy(BaseStepStrategy):
+    def next_step(self, x):
+        return golden_selection_method(lambda step: self.f(x - step * self.f_grad(x)), 0, self.max_step, self.eps)[0]
+
+
+class FibonacciStepStrategy(BaseStepStrategy):
+    def next_step(self, x):
+        return fibonacci_method(lambda step: self.f(x - step * self.f_grad(x)), 0, self.max_step, self.eps)[0]
