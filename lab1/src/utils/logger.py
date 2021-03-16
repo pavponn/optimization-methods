@@ -1,10 +1,10 @@
 import logging
-import inspect
+import lab1.src.utils.utils as ut
 
 
 def log_init_one_dim_method(method_name, foo, a, b, eps):
-    lines = inspect.getsource(foo)
-    logging.info(f'method "{method_name}" launched, foo = {lines.strip()}, on segment from {a} to {b} with eps={eps}')
+    foo_string = ut.get_lambda_str(foo)
+    logging.info(f'method "{method_name}" launched, foo = {foo_string}, on segment from {a} to {b} with eps={eps}')
 
 
 def log_cur_segment(a, b):

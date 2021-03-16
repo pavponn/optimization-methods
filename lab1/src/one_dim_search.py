@@ -15,7 +15,7 @@ def dichotomy_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIO
     :param eps: method precision
     :param max_iter: maximum number of method iterations
     :param enable_logging: if set to True enables logging according to basic logging specification
-    :return: the minimum point on [a,b], number of function f computations
+    :return: the minimum point on [a,b], number of iterations, number of function f computations
     """
     if enable_logging:
         lg.log_init_one_dim_method("dichotomy method", f, a, b, eps)
@@ -38,7 +38,7 @@ def dichotomy_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIO
             lg.log_cur_segment(a_k, b_k)
     if enable_logging:
         lg.log_method_finished()
-    return (a_k + b_k) / 2.00, iters * 2
+    return (a_k + b_k) / 2.00, iters, iters * 2
 
 
 def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIONS, enable_logging=False):
@@ -49,7 +49,7 @@ def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_I
     :param eps: method precision
     :param max_iter: maximum number of method iterations
     :param enable_logging: if set to True enables logging according to basic logging specification
-    :return: the minimum point on [a,b], number of function f computations
+    :return: the minimum point on [a,b], number of iterations, number of function f computations
     """
     if enable_logging:
         lg.log_init_one_dim_method("golden selection method", f, a, b, eps)
@@ -87,7 +87,7 @@ def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_I
             lg.log_cur_segment(a_k, b_k)
     if enable_logging:
         lg.log_method_finished()
-    return (b_k + a_k) / 2, iters + 1
+    return (b_k + a_k) / 2, iters, iters + 1
 
 
 def fibonacci_method(f, a, b, eps=DEFAULT_EPSILON, enable_logging=False):
@@ -97,7 +97,7 @@ def fibonacci_method(f, a, b, eps=DEFAULT_EPSILON, enable_logging=False):
     :param b: interval end
     :param eps: method precision
     :param enable_logging: if set to True enables logging according to basic logging specification
-    :return: the minimum point on [a,b], number of function f computations
+    :return: the minimum point on [a,b], number of iterations, number of function f computations
     """
     if enable_logging:
         lg.log_init_one_dim_method("fibonacci method", f, a, b, eps)
@@ -136,7 +136,7 @@ def fibonacci_method(f, a, b, eps=DEFAULT_EPSILON, enable_logging=False):
             lg.log_cur_segment(a_k, b_k)
     if enable_logging:
         lg.log_method_finished()
-    return (x_1 + x_2) / 2, k + 1
+    return (x_1 + x_2) / 2, k, k + 1
 
 
 def get_n_and_fibs(a, b, eps):

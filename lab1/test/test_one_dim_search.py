@@ -28,24 +28,22 @@ class TestOneDimSearch(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         logging.basicConfig(format='%(asctime)s    |    %(message)s',
                             datefmt='%m/%d/%Y %I:%M:%S%p',
-                            filemode='w',
-                            filename='../logs/test_one_dim_search.log',
                             level=logging.DEBUG)
         super(TestOneDimSearch, self).__init__(*args, **kwargs)
 
     @parameterized.expand(testcases)
     def test_dichotomy_method(self, foo, a, b, expected_result):
-        res, _ = dichotomy_method(foo, a, b, enable_logging=True)
+        res, _, _ = dichotomy_method(foo, a, b, enable_logging=True)
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
     @parameterized.expand(testcases)
     def test_golden_selection_method(self, foo, a, b, expected_result):
-        res, _ = golden_selection_method(foo, a, b, enable_logging=True)
+        res, _, _ = golden_selection_method(foo, a, b, enable_logging=True)
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
     @parameterized.expand(testcases)
     def test_fibonacci_method(self, foo, a, b, expected_result):
-        res, _ = fibonacci_method(foo, a, b, enable_logging=True)
+        res, _, _ = fibonacci_method(foo, a, b, enable_logging=True)
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
 
