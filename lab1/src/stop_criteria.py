@@ -1,8 +1,9 @@
 from enum import Enum
 import numpy as np
 
+
 DEFAULT_EPS = 1e-9
-DEFAULT_MAX_ITERATION = 1e9
+DEFAULT_MAX_ITERATIONS = 1e9
 
 
 class StopCriteria(Enum):
@@ -42,20 +43,20 @@ class FunctionStopCriteria(BaseStopCriteria):
 
 
 class GradStopCriteria(BaseStopCriteria):
-    def __init__(self, f, f_grad, eps=DEFAULT_EPS, ):
+    def __init__(self, f, f_grad, eps=DEFAULT_EPS):
         super().__init__(f, eps)
         self.f_grad = f_grad
 
-    def should_stop(self, x_cur, x_prev):
+    def should_stop(self, x_cur, _x_prev):
         return np.linalg.norm(self.f_grad(x_cur)) < self.eps
 
 
 class MaxIterationCriteria(BaseStopCriteria):
-    def __init__(self, f, eps=DEFAULT_EPS, max_iteration=DEFAULT_MAX_ITERATION):
+    def __init__(self, f, eps=DEFAULT_EPS, max_iterations=DEFAULT_MAX_ITERATIONS):
         super().__init__(f, eps)
-        self.max_iteration = max_iteration
-        self.curIter = 0
+        self.max_iterations = max_iterations
+        self.cur_iter = 0
 
-    def should_stop(self, x_cur, x_prev):
-        self.curIter += 1
-        return self.curIter >= self.max_iteration
+    def should_stop(self, _x_cur, _x_prev):
+        self.cur_iter += 1
+        return self.cur_iter >= self.max_iterations
