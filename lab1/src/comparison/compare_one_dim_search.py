@@ -35,17 +35,17 @@ def compare():
         fibonacci_iterations, fibonacci_f_calls = [], []
 
         for eps in PRECISIONS:
-            _, iterations, foo_calls = dichotomy_method(f, a, b, eps=eps, max_iter=MAX_ITER)
+            _, iterations, f_calls = dichotomy_method(f, a, b, eps=eps, max_iter=MAX_ITER)
             dichotomy_iterations.append(iterations)
-            dichotomy_f_calls.append(foo_calls)
+            dichotomy_f_calls.append(f_calls)
 
-            _, iterations, foo_calls = golden_selection_method(f, a, b, eps=eps, max_iter=MAX_ITER)
+            _, iterations, f_calls = golden_selection_method(f, a, b, eps=eps, max_iter=MAX_ITER)
             golden_selection_iterations.append(iterations)
-            golden_selection_f_calls.append(foo_calls)
+            golden_selection_f_calls.append(f_calls)
 
-            _, iterations, foo_calls = fibonacci_method(f, a, b, eps=eps)
+            _, iterations, f_calls = fibonacci_method(f, a, b, eps=eps)
             fibonacci_iterations.append(iterations)
-            fibonacci_f_calls.append(foo_calls)
+            fibonacci_f_calls.append(f_calls)
 
         d_iters = \
             {
