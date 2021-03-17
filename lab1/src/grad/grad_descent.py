@@ -1,8 +1,8 @@
 from typing import Callable
 import numpy as np
 
-import lab1.src.grad_step_strategy as st
-import lab1.src.stop_criteria as sc
+import lab1.src.grad.grad_step_strategy as st
+import lab1.src.grad.stop_criteria as sc
 
 
 DEFAULT_EPSILON = 1e-9
@@ -12,12 +12,14 @@ DEFAULT_MAX_ITERATIONS = 1e5
 def gradient_descent(f: Callable[[np.ndarray], float],
                      f_grad: Callable[[np.ndarray], np.ndarray],
                      start: np.ndarray,
-                     eps: float = DEFAULT_EPSILON,
-                     step_strategy: st.StepStrategy = st.StepStrategy.CONSTANT_STEP,
-                     stop_criteria: sc.StopCriteria = sc.StopCriteria.BY_GRAD,
-                     max_iterations=DEFAULT_MAX_ITERATIONS):
-    strategy = st.get_step_strategy(step_strategy, f, f_grad, eps)
-    criteria = sc.get_stop_criteria(stop_criteria, f, f_grad, eps, max_iterations)
+                     step_strategy: st.StepStrategy,
+                     stop_criteria: sc.StopCriteria,
+                     eps_strategy: float = DEFAULT_EPSILON,
+                     eps_stop_criteria: float = DEFAULT_EPSILON,
+                     max_iterations_strategy=DEFAULT_MAX_ITERATIONS,
+                     max_iterations_criteria=DEFAULT_MAX_ITERATIONS):
+    strategy = st.get_step_strategy(step_strategy, f, f_grad, eps_strategy, max_iterations_strategy)
+    criteria = sc.get_stop_criteria(stop_criteria, f, f_grad, eps_stop_criteria, max_iterations_criteria)
     cur_x = start
     iters = 0
 
@@ -32,7 +34,7 @@ def gradient_descent(f: Callable[[np.ndarray], float],
 
         cur_x = next_x
 
-        if iters == max_iterations:
+        if iters == max_iterations_criteria:
             return cur_x
 
 

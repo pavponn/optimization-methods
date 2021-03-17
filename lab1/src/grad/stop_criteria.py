@@ -31,6 +31,9 @@ class BaseStopCriteria(object):
         self.f = f
         self.eps = eps
 
+    def should_stop(self, x_cur, x_prev):
+        raise NotImplemented
+
 
 class ArgumentStopCriteria(BaseStopCriteria):
     def should_stop(self, x_cur, x_prev):
@@ -47,7 +50,7 @@ class GradStopCriteria(BaseStopCriteria):
         super().__init__(f, eps)
         self.f_grad = f_grad
 
-    def should_stop(self, x_cur, _x_prev):
+    def should_stop(self, x_cur, x_prev):
         return np.linalg.norm(self.f_grad(x_cur)) < self.eps
 
 
@@ -57,6 +60,6 @@ class MaxIterationCriteria(BaseStopCriteria):
         self.max_iterations = max_iterations
         self.cur_iter = 0
 
-    def should_stop(self, _x_cur, _x_prev):
+    def should_stop(self, x_cur, x_prev):
         self.cur_iter += 1
         return self.cur_iter >= self.max_iterations

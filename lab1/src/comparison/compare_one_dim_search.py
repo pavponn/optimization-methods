@@ -1,7 +1,7 @@
 import pandas as pd
 from math import sqrt
 
-from lab1.src.one_dim_search import (
+from lab1.src.onedim.one_dim_search import (
     dichotomy_method,
     golden_selection_method,
     fibonacci_method
