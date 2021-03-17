@@ -1,14 +1,15 @@
 from enum import Enum
 import numpy as np
 
-from lab1.src.one_dim_search import (
+from lab1.src.onedim.one_dim_search import (
     dichotomy_method,
     golden_selection_method,
     fibonacci_method
 )
 
-
-DEFAULT_MAX_STEPS = 100
+DEFAULT_MAX_ITERS = 100
+DEFAULT_MAX_STEP = 20
+DEFAULT_START_ALPHA = 10.0
 
 
 class StepStrategy(Enum):
@@ -19,7 +20,7 @@ class StepStrategy(Enum):
     FIBONACCI_STEP = 5,
 
 
-def get_step_strategy(strategy, f, f_grad, eps):
+def get_step_strategy(strategy, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS):
     strategies = {
         StepStrategy.CONSTANT_STEP: ConstantStepStrategy,
         StepStrategy.DIVIDE_STEP: DivideStepStrategy,
@@ -28,34 +29,34 @@ def get_step_strategy(strategy, f, f_grad, eps):
         StepStrategy.FIBONACCI_STEP: FibonacciStepStrategy,
     }
     if strategy in strategies:
-        return strategies[strategy](f, f_grad, eps)
+        return strategies[strategy](f, f_grad, eps, max_iters)
     else:
         raise TypeError("Unknown strategy")
 
 
 class BaseStepStrategy(object):
-    def __init__(self, f, f_grad, eps, max_steps=DEFAULT_MAX_STEPS):
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS):
         self.f = f
         self.f_grad = f_grad
         self.eps = eps
-        self.max_steps = max_steps
+        self.max_iters = max_iters
 
     def next_step(self, x):
         raise NotImplemented
 
 
 class ConstantStepStrategy(BaseStepStrategy):
-    def __init__(self, f, f_grad, eps, max_steps=DEFAULT_MAX_STEPS,
-                 start_alpha=10.0):
-        super().__init__(f, f_grad, eps, max_steps)
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS, start_alpha=DEFAULT_START_ALPHA):
+        super().__init__(f, f_grad, eps, max_iters)
         self.cur_alpha = start_alpha
         self.iter = 0
 
     def next_step(self, x):
         if self.iter % 100 == 0:
-            self.cur_alpha *= 1e4
+            self.cur_alpha *= 1e5
         fx = self.f(x)
         while True:
+            self.iter += 1
             new_x = x - self.cur_alpha * self.f_grad(x)
             if self.f(new_x) <= fx:
                 break
@@ -66,9 +67,8 @@ class ConstantStepStrategy(BaseStepStrategy):
 
 
 class DivideStepStrategy(BaseStepStrategy):
-    def __init__(self, f, f_grad, eps, max_steps=DEFAULT_MAX_STEPS,
-                 alpha=10.0, delta=0.8, max_power=1e4):
-        super().__init__(f, f_grad, eps, max_steps)
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS, alpha=100.0, delta=0.8, max_power=1e5):
+        super().__init__(f, f_grad, eps, max_iters)
         self.alpha = alpha
         self.delta = delta
         self.max_power = max_power
@@ -88,18 +88,30 @@ class DivideStepStrategy(BaseStepStrategy):
 
 
 class DichotomyStepStrategy(BaseStepStrategy):
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS, max_step=DEFAULT_MAX_STEP):
+        super().__init__(f, f_grad, eps, max_iters)
+        self.max_step = max_step
+
     def next_step(self, x):
         return dichotomy_method(lambda step: self.f(x - step * self.f_grad(x)),
-                                0, self.max_steps, self.eps)[0]
+                                0, self.max_step, self.eps, self.max_iters)[0]
 
 
 class GoldenSelectionStepStrategy(BaseStepStrategy):
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS, max_step=DEFAULT_MAX_STEP):
+        super().__init__(f, f_grad, eps, max_iters)
+        self.max_step = max_step
+
     def next_step(self, x):
         return golden_selection_method(lambda step: self.f(x - step * self.f_grad(x)),
-                                       0, self.max_steps, self.eps)[0]
+                                       0, self.max_step, self.eps, self.max_iters)[0]
 
 
 class FibonacciStepStrategy(BaseStepStrategy):
+    def __init__(self, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS, max_step=DEFAULT_MAX_STEP):
+        super().__init__(f, f_grad, eps, max_iters)
+        self.max_step = max_step
+
     def next_step(self, x):
         return fibonacci_method(lambda step: self.f(x - step * self.f_grad(x)),
-                                0, self.max_steps, self.eps)[0]
+                                0, self.max_step, self.eps)[0]
