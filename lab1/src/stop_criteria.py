@@ -23,7 +23,7 @@ def get_stop_criteria(criteria, f, f_grad, eps, max_iterations):
     elif criteria == StopCriteria.BY_GRAD:
         return GradStopCriteria(f, f_grad, eps)
     else:
-        raise TypeError("unknown stop criteria")
+        raise TypeError("Unknown stop criteria")
 
 
 class BaseStopCriteria(object):
