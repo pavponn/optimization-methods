@@ -1,8 +1,9 @@
 from typing import Callable
-
 import numpy as np
+
 import lab1.src.grad_step_strategy as st
 import lab1.src.stop_criteria as sc
+
 
 DEFAULT_EPSILON = 1e-9
 DEFAULT_MAX_ITERATIONS = 1e5
@@ -19,6 +20,7 @@ def gradient_descent(f: Callable[[np.ndarray], float],
     criteria = sc.get_stop_criteria(stop_criteria, f, f_grad, eps, max_iterations)
     cur_x = start
     iters = 0
+
     while True:
         iters += 1
         cur_grad = f_grad(cur_x)
@@ -38,11 +40,9 @@ if __name__ == '__main__':
     def foo(p):
         return p[0] ** 2 + p[1] ** 2
 
-
     def foo_grad(p):
         x, y = p[0], p[1]
         return np.array([2 * x, 2 * y])
-
 
     res = gradient_descent(foo, foo_grad, start=np.array([3, 4]))
     print(res)
