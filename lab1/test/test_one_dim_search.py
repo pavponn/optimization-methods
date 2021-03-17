@@ -8,9 +8,10 @@ from lab1.src.one_dim_search import (
     fibonacci_method
 )
 
+
 DELTA = 1e-6
 
-testcases = [
+TEST_CASES = [
     (lambda x: x + 1, -3, 4, -3),
     (lambda x: -x - 1, -50, 10, 10),
     (lambda x: x ** 2, -4, 6, 0),
@@ -19,7 +20,7 @@ testcases = [
     (lambda x: (x - 1) * (x - 23), -300, 400, 12),
     (lambda x: (x - 3) ** 2 + 8, -1e4, 1e5, 3),
     (lambda x: (x ** 2 - 2) / (4 - x ** 4), -111, 124, 0),
-    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1, 0)
+    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1, 0),
 ]
 
 
@@ -31,19 +32,19 @@ class TestOneDimSearch(unittest.TestCase):
                             level=logging.DEBUG)
         super(TestOneDimSearch, self).__init__(*args, **kwargs)
 
-    @parameterized.expand(testcases)
-    def test_dichotomy_method(self, foo, a, b, expected_result):
-        res, _, _ = dichotomy_method(foo, a, b, enable_logging=True)
+    @parameterized.expand(TEST_CASES)
+    def test_dichotomy_method(self, f, a, b, expected_result):
+        res = dichotomy_method(f, a, b, enable_logging=True)[0]
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
-    @parameterized.expand(testcases)
-    def test_golden_selection_method(self, foo, a, b, expected_result):
-        res, _, _ = golden_selection_method(foo, a, b, enable_logging=True)
+    @parameterized.expand(TEST_CASES)
+    def test_golden_selection_method(self, f, a, b, expected_result):
+        res = golden_selection_method(f, a, b, enable_logging=True)[0]
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
-    @parameterized.expand(testcases)
-    def test_fibonacci_method(self, foo, a, b, expected_result):
-        res, _, _ = fibonacci_method(foo, a, b, enable_logging=True)
+    @parameterized.expand(TEST_CASES)
+    def test_fibonacci_method(self, f, a, b, expected_result):
+        res = fibonacci_method(f, a, b, enable_logging=True)[0]
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
 
