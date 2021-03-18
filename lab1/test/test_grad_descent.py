@@ -53,9 +53,6 @@ TEST_CASES = [
     )
 ]
 
-# TODO: test on this function
-
-
 STOP_CRITERIA = [StopCriteria.BY_FUNCTION, StopCriteria.BY_GRAD, StopCriteria.BY_ARGUMENT]
 
 TEST_CASES = [x + (c,) for x in TEST_CASES for c in STOP_CRITERIA]
@@ -92,16 +89,16 @@ class TestGradDescent(unittest.TestCase):
         self.run_test(f, f_grad, start, expected_result, StepStrategy.FIBONACCI_STEP, stop_criteria)
 
     def run_test(self, f, f_grad, start, expected_result, step_strategy, stop_criteria):
-        result = gradient_descent(f=f,
-                                  f_grad=f_grad,
-                                  start=start,
-                                  step_strategy=step_strategy,
-                                  stop_criteria=stop_criteria,
-                                  eps_stop_criteria=EPSILON_STOP_CRITERIA,
-                                  eps_strategy=EPSILON_STRATEGY,
-                                  max_iterations_strategy=DEFAULT_MAX_ITERS_STRATEGY,
-                                  max_iterations_criteria=DEFAULT_MAX_ITERS_CRITERIA
-                                  )
+        result, _ = gradient_descent(f=f,
+                                     f_grad=f_grad,
+                                     start=start,
+                                     step_strategy=step_strategy,
+                                     stop_criteria=stop_criteria,
+                                     eps_stop_criteria=EPSILON_STOP_CRITERIA,
+                                     eps_strategy=EPSILON_STRATEGY,
+                                     max_iterations_strategy=DEFAULT_MAX_ITERS_STRATEGY,
+                                     max_iterations_criteria=DEFAULT_MAX_ITERS_CRITERIA
+                                     )
         self.assertEqual(len(result), len(expected_result))
         dist = 0.0
         for result_x_k, expected_result_x_k in list(zip(result, expected_result)):
