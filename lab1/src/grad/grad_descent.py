@@ -24,6 +24,9 @@ def gradient_descent(f: Callable[[np.ndarray], float],
     cur_x = start
     iters = 0
 
+    if trajectory is not None:
+        trajectory.append(cur_x)
+
     while True:
         iters += 1
         cur_grad = f_grad(cur_x)
