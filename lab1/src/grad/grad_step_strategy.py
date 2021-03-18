@@ -20,6 +20,17 @@ class StepStrategy(Enum):
     FIBONACCI_STEP = 5,
 
 
+def step_to_str(strategy: StepStrategy):
+    names = {
+        StepStrategy.DIVIDE_STEP: "Divide",
+        StepStrategy.CONSTANT_STEP: "Constant",
+        StepStrategy.DICHOTOMY_STEP: "Dichotomy",
+        StepStrategy.GOLDEN_SELECTION_STEP: "Golden selection",
+        StepStrategy.FIBONACCI_STEP: "Fibonacci",
+    }
+    return names[strategy] + " step"
+
+
 def get_step_strategy(strategy, f, f_grad, eps, max_iters=DEFAULT_MAX_ITERS):
     strategies = {
         StepStrategy.CONSTANT_STEP: ConstantStepStrategy,
