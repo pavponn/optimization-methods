@@ -2,3 +2,5 @@ parameterized
 numpy
 pandas
 matplotlib
+tqdm
+

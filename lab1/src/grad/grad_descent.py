@@ -34,14 +34,14 @@ def gradient_descent(f: Callable[[np.ndarray], float],
         next_x = cur_x - step * cur_grad
 
         if criteria.should_stop(cur_x, next_x):
-            return cur_x
+            return cur_x, iters
 
         cur_x = next_x
         if trajectory is not None:
             trajectory.append(cur_x)
 
         if iters == max_iterations_criteria:
-            return cur_x
+            return cur_x, iters
 
 
 if __name__ == '__main__':
@@ -52,7 +52,10 @@ if __name__ == '__main__':
         x, y = p[0], p[1]
         return np.array([2 * x, 2 * y])
 
-    res = gradient_descent(foo, foo_grad, start=np.array([3, 4]),
-                           step_strategy=st.StepStrategy.DIVIDE_STEP,
-                           stop_criteria=sc.StopCriteria.BY_GRAD)
+
+    res, _ = gradient_descent(foo,
+                              foo_grad,
+                              start=np.array([3, 4]),
+                              step_strategy=st.StepStrategy.DIVIDE_STEP,
+                              stop_criteria=sc.StopCriteria.BY_GRAD)
     print(res)
