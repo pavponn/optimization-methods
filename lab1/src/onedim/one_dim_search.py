@@ -26,7 +26,7 @@ def dichotomy_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIO
     delta = eps / 2 - 1e-10
     iters = 0
 
-    while abs(a_k - b_k) >= eps and iters < max_iter:
+    while abs(a_k - b_k) > 2 * eps and iters < max_iter:
         if enable_logging:
             lg.log_cur_segment(a_k, b_k)
 
@@ -70,6 +70,7 @@ def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_I
             lg.log_cur_segment(a_k, b_k)
 
         iters += 1
+
         if use_x_1:
             f_1 = f_prev
             f_2 = f(x_2)

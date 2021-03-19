@@ -7,7 +7,6 @@ from lab1.src.onedim.one_dim_search import (
     fibonacci_method
 )
 
-
 COMPARISON_DIR = '../../comparison_results/onedim'
 
 PRECISIONS = [0.1, 0.01, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 1e-8]
@@ -19,7 +18,8 @@ CASES_FOR_COMPARISON = [
     (lambda x: (x - 3) ** 2 + 5, -15, 100),
     (lambda x: (x - 1) * (x - 23), -300, 400),
     (lambda x: (x ** 2 - 2) / (4 - x ** 4), -111, 124),
-    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1)
+    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1),
+    (lambda x: (x - 1) / (1 - x ** 3), -500, 500)
 ]
 
 MAX_ITER = 1e5
@@ -35,17 +35,17 @@ def compare():
         fibonacci_iterations, fibonacci_f_calls = [], []
 
         for eps in PRECISIONS:
-            _, iterations, f_calls = dichotomy_method(f, a, b, eps=eps, max_iter=MAX_ITER)
-            dichotomy_iterations.append(iterations)
-            dichotomy_f_calls.append(f_calls)
+            _, dich_iterations, dich_f_calls = dichotomy_method(f, a, b, eps=eps, max_iter=MAX_ITER)
+            dichotomy_iterations.append(dich_iterations)
+            dichotomy_f_calls.append(dich_f_calls)
 
-            _, iterations, f_calls = golden_selection_method(f, a, b, eps=eps, max_iter=MAX_ITER)
-            golden_selection_iterations.append(iterations)
-            golden_selection_f_calls.append(f_calls)
+            _, gold_iterations, gold_f_calls = golden_selection_method(f, a, b, eps=eps, max_iter=MAX_ITER)
+            golden_selection_iterations.append(gold_iterations)
+            golden_selection_f_calls.append(gold_f_calls)
 
-            _, iterations, f_calls = fibonacci_method(f, a, b, eps=eps)
-            fibonacci_iterations.append(iterations)
-            fibonacci_f_calls.append(f_calls)
+            _, fib_iterations, fib_f_calls = fibonacci_method(f, a, b, eps=eps)
+            fibonacci_iterations.append(fib_iterations)
+            fibonacci_f_calls.append(fib_f_calls)
 
         d_iters = \
             {
