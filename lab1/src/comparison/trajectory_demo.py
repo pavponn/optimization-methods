@@ -66,7 +66,7 @@ def main():
                          label=f'{step_to_str(strategy)} ({len(trajectory)})')
 
             plt.legend()
-            plt.show()
+            plt.savefig(f"../comparison_results/trajectory/{f_str}_{start}.png")
 
 
 if __name__ == '__main__':
