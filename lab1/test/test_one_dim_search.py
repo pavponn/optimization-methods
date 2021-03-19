@@ -8,7 +8,6 @@ from lab1.src.onedim.one_dim_search import (
     fibonacci_method
 )
 
-
 DELTA = 1e-6
 
 TEST_CASES = [
@@ -20,7 +19,7 @@ TEST_CASES = [
     (lambda x: (x - 1) * (x - 23), -300, 400, 12),
     (lambda x: (x - 3) ** 2 + 8, -1e4, 1e5, 3),
     (lambda x: (x ** 2 - 2) / (4 - x ** 4), -111, 124, 0),
-    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1, 0),
+    (lambda x: (x ** 2 - 2) / (4 - x ** 4), -1, 1)
 ]
 
 
