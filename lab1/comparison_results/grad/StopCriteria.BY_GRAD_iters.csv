@@ -1,6 +1,6 @@
-dich_iters,gold_iters,fib_iters
-2,2,3
-2,3,3
-16,16,16
-2,3,3
-11,9,9
+divide_iters,const_iters,dich_iters,gold_iters,fib_iters
+60,84,2,2,2
+97,92,2,2,3
+61,59,14,14,14
+84,89,2,2,2
+16,5,5,5,5
