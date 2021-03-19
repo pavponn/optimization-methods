@@ -8,7 +8,7 @@ from lab1.src.onedim.one_dim_search import (
 )
 
 DEFAULT_MAX_ITERS = 100
-DEFAULT_MAX_STEP = 20
+DEFAULT_MAX_STEP = 100
 DEFAULT_START_ALPHA = 10.0
 
 
