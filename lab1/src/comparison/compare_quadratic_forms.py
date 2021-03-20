@@ -17,7 +17,7 @@ COMPARISON_DIR = '../../comparison_results/quadratic'
 
 STRATEGIES = [ss.StepStrategy.FIBONACCI_STEP, ss.StepStrategy.DIVIDE_STEP, ss.StepStrategy.CONSTANT_STEP]
 
-ns_test = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+ns_test = [2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30]
 ks_test = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 15, 20, 25, 30, 45, 50, 70, 100]
 
 n_and_k = list(itertools.product(ns_test, ks_test))
@@ -30,11 +30,11 @@ def compare(strategy: ss.StepStrategy):
     for (n, k) in tqdm(n_and_k):
         f, f_grad = generate_optimization_task(n, k)
         default_start = n * [100]
-        _, iters = gradient_descent(f, f_grad, default_start, strategy, sc.StopCriteria.BY_FUNCTION)
+        _, iters = gradient_descent(f, f_grad, default_start, strategy, sc.StopCriteria.BY_FUNCTION,
+                                    max_iterations_criteria=700)
         ns.append(n)
         ks.append(k)
         iterations.append(iters)
-        # print(f'n={n},k={k},iters={iters}')
 
     data = {
         'n': ns,
