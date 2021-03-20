@@ -66,7 +66,7 @@ def compare(stop_criteria: sc.StopCriteria):
         _, divide_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.DIVIDE_STEP, stop_criteria)
         _, constant_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.CONSTANT_STEP, stop_criteria)
         _, dich_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.DICHOTOMY_STEP, stop_criteria)
-        _, gold_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.GOLDEN_SELECTION_STEP, stop_criteria)
+        _, gold_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.GOLDEN_SECTION_STEP, stop_criteria)
         _, fib_iters = gradient_descent_wrapper(f, f_grad, start, ss.StepStrategy.FIBONACCI_STEP, stop_criteria)
 
         divide_iterations.append(divide_iters)

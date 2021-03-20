@@ -4,7 +4,7 @@ import logging
 
 from lab1.src.onedim.one_dim_search import (
     dichotomy_method,
-    golden_selection_method,
+    golden_section_method,
     fibonacci_method
 )
 
@@ -38,7 +38,7 @@ class TestOneDimSearch(unittest.TestCase):
 
     @parameterized.expand(TEST_CASES)
     def test_golden_selection_method(self, f, a, b, expected_result):
-        res = golden_selection_method(f, a, b, enable_logging=True)[0]
+        res = golden_section_method(f, a, b, enable_logging=True)[0]
         self.assertAlmostEqual(res, expected_result, delta=DELTA)
 
     @parameterized.expand(TEST_CASES)

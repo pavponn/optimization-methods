@@ -81,8 +81,8 @@ class TestGradDescent(unittest.TestCase):
         self.run_test(f, f_grad, start, expected_result, StepStrategy.DICHOTOMY_STEP, stop_criteria)
 
     @parameterized.expand(TEST_CASES)
-    def test_grad_descent_golden_selection_strategy(self, f, f_grad, start, expected_result, stop_criteria):
-        self.run_test(f, f_grad, start, expected_result, StepStrategy.GOLDEN_SELECTION_STEP, stop_criteria)
+    def test_grad_descent_golden_section_strategy(self, f, f_grad, start, expected_result, stop_criteria):
+        self.run_test(f, f_grad, start, expected_result, StepStrategy.GOLDEN_SECTION_STEP, stop_criteria)
 
     @parameterized.expand(TEST_CASES)
     def test_grad_descent_fibonacci_strategy(self, f, f_grad, start, expected_result, stop_criteria):

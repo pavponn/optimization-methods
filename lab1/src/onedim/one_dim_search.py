@@ -45,7 +45,7 @@ def dichotomy_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIO
     return (a_k + b_k) / 2, iters, iters * 2
 
 
-def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIONS, enable_logging=False):
+def golden_section_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_ITERATIONS, enable_logging=False):
     """
     :param f: function to find minimum for (should be unimodal on [a, b])
     :param a: interval start
@@ -56,7 +56,7 @@ def golden_selection_method(f, a, b, eps=DEFAULT_EPSILON, max_iter=DEFAULT_MAX_I
     :return: the minimum point on [a,b], number of iterations, number of function f computations
     """
     if enable_logging:
-        lg.log_init_one_dim_method("golden selection method", f, a, b, eps)
+        lg.log_init_one_dim_method("golden section method", f, a, b, eps)
 
     a_k, b_k = a, b
     x_1 = b_k - abs(b_k - a_k) / GOLDEN_RATION_CONSTANT

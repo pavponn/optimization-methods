@@ -3,7 +3,7 @@ from math import sqrt
 
 from lab1.src.onedim.one_dim_search import (
     dichotomy_method,
-    golden_selection_method,
+    golden_section_method,
     fibonacci_method
 )
 
@@ -39,7 +39,7 @@ def compare():
             dichotomy_iterations.append(iterations)
             dichotomy_f_calls.append(f_calls)
 
-            _, iterations, f_calls = golden_selection_method(f, a, b, eps=eps, max_iter=MAX_ITER)
+            _, iterations, f_calls = golden_section_method(f, a, b, eps=eps, max_iter=MAX_ITER)
             golden_selection_iterations.append(iterations)
             golden_selection_f_calls.append(f_calls)
 
