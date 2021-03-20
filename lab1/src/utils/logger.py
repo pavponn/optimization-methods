@@ -13,4 +13,4 @@ def log_cur_segment(a, b):
 
 def log_method_finished():
     logging.info(f'Method finished')
-    logging.info(f'===============================')
+    logging.info(f'==============================')
