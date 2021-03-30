@@ -55,21 +55,11 @@ DELTA = 1e-3
 class TestNewtonMethod(unittest.TestCase):
 
     @parameterized.expand(newton_method_testcases)
-    def test_newton_method_with_inverse(self, f, f_grad, f_hess, start, expected_result):
-        result = newton_method(f=f,
-                               f_grad=f_grad,
-                               f_hess=f_hess,
-                               start=start,
-                               use_conjugate=False)
-        self.check_result(result, expected_result)
-
-    @parameterized.expand(newton_method_testcases)
     def test_newton_method_with_conjugate_direction(self, f, f_grad, f_hess, start, expected_result):
         result = newton_method(f=f,
                                f_grad=f_grad,
                                f_hess=f_hess,
-                               start=start,
-                               use_conjugate=True)
+                               start=start)
         self.check_result(result, expected_result)
 
     def check_result(self, result, expected_result):
