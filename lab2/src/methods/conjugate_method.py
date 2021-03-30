@@ -24,7 +24,6 @@ def conjugate_direction_method(Q: np.ndarray,
 
     for k in range(1, max_iters):
         w_k = -Q @ x_prev - b
-        # w_k = w_prev - h_prev * (Q @ u_prev)
         u_k = w_k - (np.dot(Q @ u_prev, w_k) / np.dot(Q @ u_prev, u_prev)) * u_prev
         if np.linalg.norm(u_k) < eps:
             return x_prev
