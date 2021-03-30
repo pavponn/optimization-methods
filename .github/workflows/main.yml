@@ -25,4 +25,6 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test
-        run: python -m unittest discover ./lab1/test ./lab2/test
+        run: |
+          python -m unittest discover ./lab1/test
+          python -m unittest discover ./lab2/test
