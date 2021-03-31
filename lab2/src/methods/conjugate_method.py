@@ -39,7 +39,6 @@ def conjugate_direction_method(Q: np.ndarray,
     return x_prev
 
 
-# FIXME
 def conjugate_gradient_method(f: Callable[[np.ndarray], float],
                               f_grad: Callable[[np.ndarray], np.ndarray],
                               start: np.ndarray,
