@@ -26,7 +26,7 @@ class ConstantStepStrategy(BaseStepStrategy):
 
         while True:
             self.iters += 1
-            x_new = x + self.step * x_wave
+            x_new = x + self.step * (x_wave - x)
             if self.f(x_new) < fx:
                 return self.step
             if self.step < self.eps:

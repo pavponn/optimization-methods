@@ -1,10 +1,13 @@
 from typing import Callable
-from lab1.src.onedim.one_dim_search import fibonacci_method
+from lab1.src.onedim.one_dim_search import dichotomy_method
+from lab1.src.grad.grad_descent import gradient_descent
+from lab1.src.grad.grad_step_strategy import StepStrategy
+from lab1.src.grad.stop_criteria import StopCriteria
 
 import numpy as np
 
-DEFAULT_EPS = 1e-5
-DEFAULT_MAX_ITERS = 1000
+DEFAULT_EPS = 1e-6
+DEFAULT_MAX_ITERS = 100
 
 
 def conjugate_direction_method(Q: np.ndarray,
@@ -36,6 +39,7 @@ def conjugate_direction_method(Q: np.ndarray,
     return x_prev
 
 
+# FIXME
 def conjugate_gradient_method(f: Callable[[np.ndarray], float],
                               f_grad: Callable[[np.ndarray], np.ndarray],
                               start: np.ndarray,
@@ -48,12 +52,11 @@ def conjugate_gradient_method(f: Callable[[np.ndarray], float],
     x_prev = start
 
     for k in range(1, max_iters):
-        h_k, _, _ = fibonacci_method(lambda h: f(x_prev + h * u_prev), 0, 100, eps)
         w_k = (-1) * f_grad(x_prev)
         y_k = max(0, np.dot(w_k - w_prev, w_k) / np.dot(w_prev, w_prev))
         u_k = w_k + y_k * u_prev
+        h_k, _, _ = dichotomy_method(lambda h: f(x_prev + h * u_k), 0, 50, 1e-8)
         x_k = x_prev + h_k * u_k
-
         if np.linalg.norm(w_k) < eps:
             return x_prev
 

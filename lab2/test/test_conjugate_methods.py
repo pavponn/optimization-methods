@@ -59,12 +59,12 @@ class TestConjugateMethods(unittest.TestCase):
 
     @parameterized.expand(conjugate_direction_method_testcases)
     def test_conjugate_direction_method(self, Q, b, start, expected_result):
-        result = conjugate_direction_method(Q=np.array(Q), b=np.array(b), start=np.array(start))
+        result = conjugate_direction_method(Q=np.array(Q), b=np.array(b), start=np.array(start),eps=1e-9)
         self.check_result(result, expected_result)
 
     @parameterized.expand(conjugate_gradient_method_testcases)
     def test_conjugate_gradient_method(self, f, f_grad, start, expected_result):
-        result = conjugate_gradient_method(f=f, f_grad=f_grad, start=np.array(start))
+        result = conjugate_gradient_method(f=f, f_grad=f_grad, start=np.array(start), eps=1e-9)
         self.check_result(result, expected_result)
 
     def check_result(self, result, expected_result):

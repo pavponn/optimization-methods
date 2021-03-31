@@ -55,7 +55,7 @@ DELTA = 1e-3
 class TestNewtonMethod(unittest.TestCase):
 
     @parameterized.expand(newton_method_testcases)
-    def test_newton_method_with_conjugate_direction(self, f, f_grad, f_hess, start, expected_result):
+    def test_newton_method(self, f, f_grad, f_hess, start, expected_result):
         result = newton_method(f=f,
                                f_grad=f_grad,
                                f_hess=f_hess,
