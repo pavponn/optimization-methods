@@ -56,10 +56,10 @@ class TestNewtonMethod(unittest.TestCase):
 
     @parameterized.expand(newton_method_testcases)
     def test_newton_method(self, f, f_grad, f_hess, start, expected_result):
-        result = newton_method(f=f,
-                               f_grad=f_grad,
-                               f_hess=f_hess,
-                               start=start)
+        result, _ = newton_method(f=f,
+                                  f_grad=f_grad,
+                                  f_hess=f_hess,
+                                  start=start)
         self.check_result(result, expected_result)
 
     def check_result(self, result, expected_result):

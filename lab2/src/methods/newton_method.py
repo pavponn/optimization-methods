@@ -16,16 +16,18 @@ def newton_method(f: Callable[[np.ndarray], float],
                   max_iters: int = DEFAULT_MAX_ITERS):
     x_prev = start
     iters = 0
+    strategy = ConstantStepStrategy(f, 1e-10)
 
     while iters < max_iters:
 
-        x_wave = conjugate_direction_method(f_hess(x_prev), f_grad(x_prev), x_prev)
-        alpha, _, _ = dichotomy_method(lambda a: f(x_prev + a * x_wave), 0, 100, 1e-8)
+        x_wave, _ = conjugate_direction_method(f_hess(x_prev), f_grad(x_prev), x_prev)
+        # alpha = strategy.next_step(x_prev, x_wave)
+        alpha, _, _ = dichotomy_method(lambda a: f(x_prev + a * x_wave), 0, 10, 1e-9)
         x_k = x_prev + alpha * x_wave
-        if np.linalg.norm(x_k - x_prev) < eps:
-            return x_k
+        if np.linalg.norm(x_prev - x_k) < eps:
+            return x_k, iters
         x_prev = x_k
 
         iters += 1
 
-    return x_prev
+    return x_prev, iters
