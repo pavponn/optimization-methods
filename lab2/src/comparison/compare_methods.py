@@ -17,8 +17,8 @@ def quadratic_function(x: np.ndarray):
 def quadratic_function_grad(x: np.ndarray):
     return np.array(
         [
-            200 * x[0] - 200 * x[1] - 2,
-            200 * (x[1] - x[0])
+            202 * x[0] - 2 - 200 * x[1],
+            -200 * x[0] + 200 * x[1]
         ], dtype="float64"
     )
 
@@ -26,7 +26,7 @@ def quadratic_function_grad(x: np.ndarray):
 def quadratic_function_hess(x: np.ndarray):
     return np.array(
         [
-            [200.0001, -200],
+            [202, -200],
             [-200, 200]
         ], dtype="float64"
     )
@@ -43,7 +43,7 @@ def quadratic_function_Q():
 
 def compare_quadratic():
     print("===Quadratic function===")
-    starts = [[0, 0], [1, 1], [-1, -1], [-1, -2], [1.95, -2]]
+    starts = [[0, 0], [1, 1], [-1, -1], [-1, -2], [1.95, -2], [-3, 4], [10, 10]]
     method_names_column = []
     start_column = []
     result_column = []
