@@ -58,8 +58,8 @@ DELTA = 1e-3
 class TestConjugateMethods(unittest.TestCase):
 
     @parameterized.expand(conjugate_direction_method_testcases)
-    def test_conjugate_direction_method(self, Q, b, start, expected_result):
-        result, _ = conjugate_direction_method(Q=np.array(Q), b=np.array(b), start=np.array(start), eps=1e-11)
+    def test_conjugate_direction_method(self, q, b, start, expected_result):
+        result, _ = conjugate_direction_method(q=np.array(q), b=np.array(b), start=np.array(start), eps=1e-11)
         self.check_result(result, expected_result)
 
     @parameterized.expand(conjugate_gradient_method_testcases)

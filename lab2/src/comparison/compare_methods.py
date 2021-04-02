@@ -32,7 +32,7 @@ def quadratic_function_hess(x: np.ndarray):
     )
 
 
-def quadratic_function_Q():
+def quadratic_function_q():
     return np.array(
         [
             [202, -200],
@@ -50,7 +50,7 @@ def compare_quadratic():
     result_value_column = []
     iterations_column = []
     for start in starts:
-        result_directions, iters = conjugate_direction_method(Q=quadratic_function_Q(),
+        result_directions, iters = conjugate_direction_method(q=quadratic_function_q(),
                                                               b=np.array([-2, 0], dtype="float64"),
                                                               start=np.array(start, dtype="float64")
                                                               )

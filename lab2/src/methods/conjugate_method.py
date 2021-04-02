@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, List, Optional
 from lab1.src.onedim.one_dim_search import dichotomy_method
 from lab1.src.grad.grad_descent import gradient_descent
 from lab1.src.grad.grad_step_strategy import StepStrategy
@@ -10,33 +10,40 @@ DEFAULT_EPS = 1e-6
 DEFAULT_MAX_ITERS = 100
 
 
-def conjugate_direction_method(Q: np.ndarray,
+def conjugate_direction_method(q: np.ndarray,
                                b: np.ndarray,
                                start: np.ndarray,
                                max_iters=DEFAULT_MAX_ITERS,
-                               eps: float = DEFAULT_EPS):
+                               eps: float = DEFAULT_EPS,
+                               trajectory: Optional[List] = None):
     if np.all(b == 0):
         return b, 0
 
-    w_prev = - Q @ start - b
+    if trajectory is not None:
+        trajectory.append(start)
+    w_prev = - q @ start - b
     u_prev = w_prev
     if np.linalg.norm(u_prev) == 0:
         return start, 0
-    h_prev = np.dot(u_prev, u_prev) / np.dot(Q @ u_prev, u_prev)
+    h_prev = np.dot(u_prev, u_prev) / np.dot(q @ u_prev, u_prev)
     x_prev = start + h_prev * u_prev
+    if trajectory is not None:
+        trajectory.append(x_prev)
 
     k = 1
     while k < max_iters:
-        w_k = -Q @ x_prev - b
-        u_k = w_k - (np.dot(Q @ u_prev, w_k) / np.dot(Q @ u_prev, u_prev)) * u_prev
+        w_k = -q @ x_prev - b
+        u_k = w_k - (np.dot(q @ u_prev, w_k) / np.dot(q @ u_prev, u_prev)) * u_prev
         if np.linalg.norm(u_k) < eps:
             return x_prev, k
-        h_k = np.dot(w_k, u_k) / np.dot(Q @ u_k, u_k)
+        h_k = np.dot(w_k, u_k) / np.dot(q @ u_k, u_k)
         x_k = x_prev + h_k * u_k
 
         u_prev = u_k
         x_prev = x_k
         k += 1
+        if trajectory is not None:
+            trajectory.append(x_prev)
 
     return x_prev, k
 
