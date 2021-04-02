@@ -4,6 +4,7 @@ from lab1.src.onedim.one_dim_search import dichotomy_method
 from lab2.src.methods.conjugate_method import conjugate_direction_method
 from lab2.src.methods.newton_step_strategy import ConstantStepStrategy
 
+
 DEFAULT_EPS = 1e-6
 DEFAULT_MAX_ITERS = 1000
 

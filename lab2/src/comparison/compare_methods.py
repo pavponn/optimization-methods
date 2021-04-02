@@ -2,6 +2,7 @@ import math
 import numpy as np
 import pandas as pd
 
+
 from lab2.src.methods.conjugate_method import (
     conjugate_direction_method,
     conjugate_gradient_method
@@ -23,7 +24,7 @@ def quadratic_function_grad(x: np.ndarray):
     )
 
 
-def quadratic_function_hess(x: np.ndarray):
+def quadratic_function_hess(_x: np.ndarray):
     return np.array(
         [
             [202, -200],

@@ -1,10 +1,8 @@
 from typing import Callable, List, Optional
 from lab1.src.onedim.one_dim_search import dichotomy_method
-from lab1.src.grad.grad_descent import gradient_descent
-from lab1.src.grad.grad_step_strategy import StepStrategy
-from lab1.src.grad.stop_criteria import StopCriteria
 
 import numpy as np
+
 
 DEFAULT_EPS = 1e-6
 DEFAULT_MAX_ITERS = 100
@@ -59,7 +57,7 @@ def conjugate_gradient_method(f: Callable[[np.ndarray], float],
         return start, 0
     x_prev = start
     k = 1
-    update_iters = len(start)
+
     while k < max_iters:
         w_k = (-1) * f_grad(x_prev)
         y_k = max(0, np.dot(w_k - w_prev, w_k) / np.dot(w_prev, w_prev))
