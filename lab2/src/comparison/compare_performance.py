@@ -82,10 +82,10 @@ def plot_memory_usage(method_name: str, mem_usage: [float]):
 
 def main():
     for f_str, f, f_grad, f_hess, b, start in FUNCTIONS:
-        for (method_name, method) in METHODS.items():
+        for (method_name, method_runner) in METHODS.items():
             print(f"# Running {method_name}...")
             mem_usage, iters = memory_usage(
-                (method, (f, f_grad, f_hess, b, start)),
+                (method_runner, (f, f_grad, f_hess, b, start)),
                 interval=0.05,
                 retval=True
             )
