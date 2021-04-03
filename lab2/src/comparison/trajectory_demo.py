@@ -7,12 +7,34 @@ from lab1.src.grad.grad_descent import gradient_descent
 from lab1.src.grad.stop_criteria import StopCriteria
 
 from lab2.src.methods.newton_method import newton_method
-from lab2.src.methods.conjugate_method import conjugate_direction_method
+from lab2.src.methods.conjugate_method import conjugate_direction_method, conjugate_gradient_method
 from lab2.src.comparison.compare_methods import (
     quadratic_function,
     quadratic_function_grad,
-    quadratic_function_hess,
+    quadratic_function_hess
 )
+
+
+def simple_quadratic_function(x: np.ndarray):
+    return x[0] ** 2 - x[0] * x[1] + 2 * x[1] ** 2
+
+
+def simple_quadratic_function_grad(x: np.ndarray):
+    return np.array(
+        [
+            2 * x[0] - x[1],
+            - x[0] + 4 * x[1]
+        ], dtype="float64"
+    )
+
+
+def simple_quadratic_function_hess(_x: np.ndarray):
+    return np.array(
+        [
+            [2, -1],
+            [-1, 4]
+        ], dtype="float64"
+    )
 
 
 FUNCTIONS = [
@@ -25,6 +47,16 @@ FUNCTIONS = [
         (0.5, -1.5),  # start
         -1, 1.5,  # x_b, x_b
         -2, 1.5,  # y_a, y_b
+    ),
+    (
+        "x² - xy + 2y²",  # f_str
+        simple_quadratic_function,  # f
+        simple_quadratic_function_grad,  # f_grad
+        simple_quadratic_function_hess,  # f_hess
+        np.array([0, 0], dtype="float64"),  # b
+        (0.5, -0.5),  # start
+        -1, 1,  # x_b, x_b
+        -1, 1,  # y_a, y_b
     )
 ]
 
@@ -74,6 +106,14 @@ def main():
                                            eps=eps)[1]
         plt.plot(*zip(*trajectory), c='r',
                  label=f'Conjugate direction ({iters})')
+
+        trajectory = []
+        iters = conjugate_gradient_method(f, f_grad,
+                                          np.array(start),
+                                          trajectory=trajectory,
+                                          eps=eps)[1]
+        plt.plot(*zip(*trajectory), c='purple',
+                 label=f'Conjugate gradients ({iters})')
 
         plt.plot(*start, 'mx')
         plt.legend()
