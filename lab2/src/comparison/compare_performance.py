@@ -7,10 +7,13 @@ from lab1.src.grad.grad_descent import gradient_descent
 from lab1.src.grad.stop_criteria import StopCriteria
 
 from lab2.src.methods.newton_method import newton_method
-from lab2.src.methods.conjugate_method import conjugate_direction_method
+from lab2.src.methods.conjugate_method import (
+    conjugate_direction_method,
+    conjugate_gradient_method
+)
 
 
-EPS = 1e-9
+EPS = 1e-7
 
 FUNCTIONS = [
     (
@@ -57,10 +60,16 @@ def run_conj_dir_method(_f, _f_grad, f_hess, b, start):
     return iters
 
 
+def run_conj_grad_method(f, f_grad, _f_hess, _b, start):
+    iters = conjugate_gradient_method(f, f_grad, np.array(start), eps=EPS)[1]
+    return iters
+
+
 METHODS = {
     'Gradient descent': run_grad_descent,
     'Newton method': run_newton_method,
     'Conjugate direction': run_conj_dir_method,
+    'Conjugate gradient': run_conj_grad_method,
 }
 
 
