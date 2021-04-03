@@ -34,6 +34,16 @@ FUNCTIONS = [
     )
 ]
 
+CALL_COUNTS = {}
+
+
+def call_cnt_wrapper(f, name: str):
+    def w(x):
+        CALL_COUNTS.setdefault(name, 0)
+        CALL_COUNTS[name] += 1
+        return f(x)
+    return w
+
 
 def run_grad_descent(f, f_grad, _f_hess, _b, start):
     trajectory = []
@@ -81,15 +91,23 @@ def plot_memory_usage(method_name: str, mem_usage: [float]):
 
 
 def main():
+    should_profile = False
     for f_str, f, f_grad, f_hess, b, start in FUNCTIONS:
+        if should_profile:
+            f = call_cnt_wrapper(f, 'f')
+            f_grad = call_cnt_wrapper(f_grad, 'f_grad')
         for (method_name, method_runner) in METHODS.items():
             print(f"# Running {method_name}...")
             mem_usage, iters = memory_usage(
                 (method_runner, (f, f_grad, f_hess, b, start)),
                 interval=0.05,
+                max_iterations=1 if should_profile else None,
                 retval=True
             )
             print(f"Finished in {iters} iterations")
+            if should_profile:
+                print(f"Function call stats: {CALL_COUNTS}")
+                CALL_COUNTS.clear()
             plot_memory_usage(method_name, mem_usage)
 
 
