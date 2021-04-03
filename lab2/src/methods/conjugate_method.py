@@ -50,7 +50,11 @@ def conjugate_gradient_method(f: Callable[[np.ndarray], float],
                               f_grad: Callable[[np.ndarray], np.ndarray],
                               start: np.ndarray,
                               eps=DEFAULT_EPS,
-                              max_iters=DEFAULT_MAX_ITERS):
+                              max_iters=DEFAULT_MAX_ITERS,
+                              trajectory: Optional[List] = None):
+    if trajectory is not None:
+        trajectory.append(start)
+
     w_prev = (-1) * f_grad(start)
     u_prev = w_prev
     if np.linalg.norm(w_prev) < eps:
@@ -72,5 +76,8 @@ def conjugate_gradient_method(f: Callable[[np.ndarray], float],
         u_prev = u_k
         w_prev = w_k
         k += 1
+
+        if trajectory is not None:
+            trajectory.append(x_prev)
 
     return x_prev, k
