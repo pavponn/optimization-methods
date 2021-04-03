@@ -16,13 +16,13 @@ from lab2.src.comparison.compare_methods import (
 
 
 def simple_quadratic_function(x: np.ndarray):
-    return x[0] ** 2 - x[0] * x[1] + 2 * x[1] ** 2
+    return x[0] ** 2 - x[0] * x[1] + 2 * x[1] ** 2 - x[0]
 
 
 def simple_quadratic_function_grad(x: np.ndarray):
     return np.array(
         [
-            2 * x[0] - x[1],
+            2 * x[0] - x[1] - 1,
             - x[0] + 4 * x[1]
         ], dtype="float64"
     )
@@ -49,14 +49,14 @@ FUNCTIONS = [
         -2, 1.5,  # y_a, y_b
     ),
     (
-        "x² - xy + 2y²",  # f_str
+        "x² - xy + 2y² - x",  # f_str
         simple_quadratic_function,  # f
         simple_quadratic_function_grad,  # f_grad
         simple_quadratic_function_hess,  # f_hess
-        np.array([0, 0], dtype="float64"),  # b
-        (0.5, -0.5),  # start
-        -1, 1,  # x_b, x_b
-        -1, 1,  # y_a, y_b
+        np.array([-1, 0], dtype="float64"),  # b
+        (-1, -1),  # start
+        -2, 2,  # x_b, x_b
+        -2, 2,  # y_a, y_b
     )
 ]
 
