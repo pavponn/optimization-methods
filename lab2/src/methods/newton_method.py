@@ -19,7 +19,7 @@ def newton_method(f: Callable[[np.ndarray], float],
     x_prev = start
     if trajectory is not None:
         trajectory.append(start)
-    iters = 0
+    iters = 1
     strategy = ConstantStepStrategy(f, 1e-10)
 
     while iters < max_iters:
