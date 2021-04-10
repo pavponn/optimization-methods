@@ -140,8 +140,8 @@ def _simplex_method(A, b, c) -> Optional[Tuple[float, np.ndarray, np.ndarray]]:
     return res, solution, Bz
 
 
-def simplex_method(A, b, c, leq=False, dual=False) -> Optional[Union[Tuple[float, np.ndarray],
-                                                                     Tuple[float, np.ndarray, np.ndarray]]]:
+def simplex_method(A, b, c, leq=False) -> Optional[Union[Tuple[float, np.ndarray],
+                                                         Tuple[float, np.ndarray, np.ndarray]]]:
     """
     <x, c> -> max
     if leq:
@@ -174,12 +174,6 @@ def simplex_method(A, b, c, leq=False, dual=False) -> Optional[Union[Tuple[float
         res = maximum, sol[:-len(b)]
     else:
         res = maximum, sol
-
-    if dual:  # experimental feature
-        A_dual = A[:, Bz]
-        c_dual = c[Bz]
-        sol_dual = c_dual.dot(np.linalg.inv(A_dual))
-        res = res[0], res[1], sol_dual
 
     return res
 
