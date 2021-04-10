@@ -28,3 +28,4 @@ jobs:
         run: |
           python -m unittest discover ./lab1/test
           python -m unittest discover ./lab2/test
+          python -m unittest discover ./lab3/test
