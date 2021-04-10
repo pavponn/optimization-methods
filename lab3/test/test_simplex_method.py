@@ -79,9 +79,10 @@ simplex_method_testcases = [
 DELTA = 9
 
 
-class TestNewtonMethod(unittest.TestCase):
+class TestSimplexMethod(unittest.TestCase):
+
     @parameterized.expand(simplex_method_testcases)
-    def test_newton_method(self, A, b, c):
+    def test_simplex_method(self, A, b, c):
         t = simplex_method(A, b, c)
         result = t if t is not None else (None, None)
         expected_result = opt.linprog(c=-c, A_eq=A, b_eq=b, method='simplex')
